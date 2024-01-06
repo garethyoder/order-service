@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.21.1"))
+    implementation(platform("software.amazon.awssdk:bom:2.22.10"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:dynamodb-enhanced")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -25,6 +25,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:localstack:1.19.3")
     testImplementation("org.testcontainers:junit-jupiter")
 }
 

@@ -1,9 +1,11 @@
 package com.cedarmeadowmeats.orderservice.controller;
 
 import com.cedarmeadowmeats.orderservice.model.Submission;
+import com.cedarmeadowmeats.orderservice.model.SubmissionRequest;
 import com.cedarmeadowmeats.orderservice.service.OrderService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -15,8 +17,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping
-    public void submit(final @Validated Submission submission) {
-        orderService.saveSubmission(submission);
+    @PostMapping("/submit")
+    public void submit(final @Validated @RequestBody SubmissionRequest submissionRequest) {
+        orderService.saveSubmission(new Submission(submissionRequest));
     }
 }

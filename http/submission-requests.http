@@ -1,0 +1,10 @@
+###
+POST http://localhost:8080/submit
+Content-Type: application/json
+
+{
+  "name": "Script Test",
+  "email": "test@test.com",
+  "phone": "123-456-7890",
+  "form": "submission-form"
+}
