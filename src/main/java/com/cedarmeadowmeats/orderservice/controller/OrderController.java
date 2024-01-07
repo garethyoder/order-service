@@ -1,5 +1,6 @@
 package com.cedarmeadowmeats.orderservice.controller;
 
+import com.cedarmeadowmeats.orderservice.model.OrderFormSubmissionRequest;
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import com.cedarmeadowmeats.orderservice.model.SubmissionRequest;
 import com.cedarmeadowmeats.orderservice.service.OrderService;
@@ -20,5 +21,10 @@ public class OrderController {
     @PostMapping("/submit")
     public void submit(final @Validated @RequestBody SubmissionRequest submissionRequest) {
         orderService.saveSubmission(new Submission(submissionRequest));
+    }
+
+    @PostMapping("/order-form/submit")
+    public void submit(final @Validated @RequestBody OrderFormSubmissionRequest orderFormSubmissionRequest) {
+        orderService.saveSubmission(new Submission(orderFormSubmissionRequest));
     }
 }

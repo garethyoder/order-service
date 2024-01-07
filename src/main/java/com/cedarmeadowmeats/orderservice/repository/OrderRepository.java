@@ -1,21 +1,25 @@
 package com.cedarmeadowmeats.orderservice.repository;
 
+import com.cedarmeadowmeats.orderservice.model.OrderFormSelectionEnum;
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.EnhancedType;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.StaticAttributeTags;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.StaticTableSchema;
-import software.amazon.awssdk.enhanced.dynamodb.model.BatchWriteItemEnhancedRequest;
-import software.amazon.awssdk.enhanced.dynamodb.model.BatchWriteResult;
-import software.amazon.awssdk.enhanced.dynamodb.model.PutItemEnhancedRequest;
-import software.amazon.awssdk.enhanced.dynamodb.model.WriteBatch;
+import software.amazon.awssdk.enhanced.dynamodb.model.*;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.lang.invoke.MethodHandles;
 import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional.keyEqualTo;
 
 @Repository
 public class OrderRepository {
@@ -43,21 +47,37 @@ public class OrderRepository {
         LOGGER.info(result.toString());
     }
 
+    public List<Submission> getSubmissionByEmail(final String email) {
+        DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(dynamoDbClient).build();
+        DynamoDbTable<Submission> submissionTable = enhancedClient.table(tableName, SUBMISSION_STATIC_TABLE_SCHEMA);
+        PageIterable<Submission> customers = submissionTable.query(keyEqualTo(k -> k.partitionValue(email)));
+        return customers.items().stream().collect(Collectors.toList());
+    }
+
     public static final StaticTableSchema<Submission> SUBMISSION_STATIC_TABLE_SCHEMA = StaticTableSchema.builder(Submission.class)
             .newItemSupplier(Submission::new)
             .addAttribute(String.class, a -> a.name("name")
                     .getter(Submission::getName)
                     .setter(Submission::setName))
             .addAttribute(String.class, a -> a.name("email")
-                    .getter(Submission::getName)
-                    .setter(Submission::setName)
+                    .getter(Submission::getEmail)
+                    .setter(Submission::setEmail)
                     .tags(StaticAttributeTags.primaryPartitionKey()))
             .addAttribute(String.class, a -> a.name("phone")
-                    .getter(Submission::getName)
-                    .setter(Submission::setName))
+                    .getter(Submission::getPhone)
+                    .setter(Submission::setPhone))
+            .addAttribute(String.class, a -> a.name("comments")
+                    .getter(Submission::getComments)
+                    .setter(Submission::setComments))
+            .addAttribute(EnhancedType.of(OrderFormSelectionEnum.class), a -> a.name("selection")
+                    .getter(Submission::getOrderFormSelectionEnum)
+                    .setter(Submission::setOrderFormSelectionEnum))
             .addAttribute(String.class, a -> a.name("form")
                     .getter(Submission::getForm)
                     .setter(Submission::setForm))
+            .addAttribute(String.class, a -> a.name("organizationId")
+                    .getter(Submission::getOrganizationId)
+                    .setter(Submission::setOrganizationId))
             .addAttribute(ZonedDateTime.class, a -> a.name("createdDate")
                     .getter(Submission::getCreatedDate)
                     .setter(Submission::setCreatedDate))

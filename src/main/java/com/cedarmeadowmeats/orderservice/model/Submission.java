@@ -7,16 +7,34 @@ public class Submission {
     private String name;
     private String email;
     private String phone;
+    private String comments;
     private String form;
+    private OrderFormSelectionEnum orderFormSelectionEnum;
+    private String organizationId;
     private ZonedDateTime createdDate;
     private ZonedDateTime lastUpdatedDate;
     private Integer version;
 
     public Submission(final SubmissionRequest submissionRequest) {
-        this.name = submissionRequest.name();
-        this.email = submissionRequest.email();
-        this.phone = submissionRequest.phone();
-        this.form = submissionRequest.form();
+        this.name = submissionRequest.getName();
+        this.email = submissionRequest.getEmail();
+        this.phone = submissionRequest.getPhone();
+        this.comments = submissionRequest.getComments();
+        this.form = submissionRequest.getForm();
+        this.organizationId = submissionRequest.getOrganizationId();
+        this.createdDate = ZonedDateTime.now();
+        this.lastUpdatedDate = ZonedDateTime.now();
+        this.version = 0;
+    }
+
+    public Submission(final OrderFormSubmissionRequest orderFormSubmissionRequest) {
+        this.name = orderFormSubmissionRequest.getName();
+        this.email = orderFormSubmissionRequest.getEmail();
+        this.phone = orderFormSubmissionRequest.getPhone();
+        this.orderFormSelectionEnum = orderFormSubmissionRequest.orderFormSelectionEnum();
+        this.comments = orderFormSubmissionRequest.getComments();
+        this.form = orderFormSubmissionRequest.getForm();
+        this.organizationId = orderFormSubmissionRequest.getOrganizationId();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
@@ -48,6 +66,30 @@ public class Submission {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public OrderFormSelectionEnum getOrderFormSelectionEnum() {
+        return orderFormSelectionEnum;
+    }
+
+    public void setOrderFormSelectionEnum(OrderFormSelectionEnum orderFormSelectionEnum) {
+        this.orderFormSelectionEnum = orderFormSelectionEnum;
+    }
+
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getForm() {
