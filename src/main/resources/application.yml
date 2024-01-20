@@ -1,11 +1,17 @@
 spring:
   application:
     name: order-service
+  docker:
+    compose:
+      enabled: false
 ---
 spring:
   config:
     activate:
       on-profile: local
+  docker:
+    compose:
+      enabled: true
 amazon:
   aws:
     access-key: 1

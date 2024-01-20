@@ -11,11 +11,11 @@ Resources:
   OrderServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: run.sh
-      Layers:
-        - arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:18
+      Handler: com.cedarmeadowmeats.orderservice.StreamLambdaHandler::handleRequest
+#      Layers:
+#        - arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:18
       Runtime: java21
-      CodeUri: build/libs/order-service-0.0.2-SNAPSHOT.jar
+      CodeUri: .
       MemorySize: 1512
       Policies:
         - AWSLambdaBasicExecutionRole
@@ -26,9 +26,10 @@ Resources:
         Variables:
           org: cedarmeadowmeats
           eng: test
-          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
-          AWS_LWA_READINESS_CHECK_PATH: /actuator/health
+#          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
+#          AWS_LWA_READINESS_CHECK_PATH: /actuator/health
           JAVA_TOOL_OPTIONS: -Dspring.profiles.active=test
+          MAIN_CLASS: com.cedarmeadowmeats.orderservice.OrderServiceApplication
       Tags:
         org: cedarmeadowmeats
         eng: test
@@ -38,8 +39,8 @@ Resources:
           Properties:
             TimeoutInMillis: 20000
             PayloadFormatVersion: '1.0'
-    Metadata:
-      SkipBuild: True
+#    Metadata:
+#      SkipBuild: True
 #      BuildMethod: Makefile
 
 Outputs:
