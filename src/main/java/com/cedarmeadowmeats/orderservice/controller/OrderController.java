@@ -5,6 +5,7 @@ import com.cedarmeadowmeats.orderservice.model.Submission;
 import com.cedarmeadowmeats.orderservice.model.SubmissionRequest;
 import com.cedarmeadowmeats.orderservice.service.OrderService;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,5 +27,15 @@ public class OrderController {
     @PostMapping("/order-form/submit")
     public void submit(final @Validated @RequestBody OrderFormSubmissionRequest orderFormSubmissionRequest) {
         orderService.saveSubmission(new Submission(orderFormSubmissionRequest));
+    }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "ok!";
+    }
+
+    @GetMapping("/ping2")
+    public String ping2() {
+        return "ok!";
     }
 }

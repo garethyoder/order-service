@@ -15,19 +15,22 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Configuration
 public class AwsConfig {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @Value("${amazon.dynamodb.endpoint}")
+    @Value("${amazon.dynamodb.endpoint:}")
     private String amazonDynamoDBEndpoint;
 
-    @Value("${amazon.aws.accesskey}")
+    @Value("${amazon.aws.access-key:}")
     private String amazonAWSAccessKey;
 
-    @Value("${amazon.aws.secretkey}")
+    @Value("${amazon.aws.secret-key:}")
     private String amazonAWSSecretKey;
 
     public AwsConfig() {
@@ -39,7 +42,11 @@ public class AwsConfig {
     @Bean
     DynamoDbClient dynamoDbClient() {
         DynamoDbClient dynamoDbClient;
-        if (ObjectUtils.isEmpty(List.of(amazonAWSAccessKey, amazonAWSSecretKey, amazonDynamoDBEndpoint))) {
+        List<String> accessParams = Stream.of(amazonAWSAccessKey, amazonAWSSecretKey, amazonDynamoDBEndpoint)
+                .filter(Objects::isNull)
+                .collect(Collectors.toList());
+        if (ObjectUtils.isEmpty(accessParams)) {
+            LOGGER.info("DynamoDbClient defined by IAM roles");
             dynamoDbClient = DynamoDbClient.builder()
                     .region(region)
                     .build();
