@@ -25,7 +25,7 @@ Resources:
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
-            TableName: !Sub 'order-service-${Stage}'
+            TableName: !Sub 'order-table-${Stage}'
       Timeout: 60
       Environment:
         Variables:
@@ -34,7 +34,7 @@ Resources:
           SPRING_PROFILES_ACTIVE: !Ref Stage
           JAVA_TOOL_OPTIONS: !Sub '-Dspring.profiles.active=${Stage}'
           MAIN_CLASS: com.cedarmeadowmeats.orderservice.OrderServiceApplication
-          TABLE_NAME: !Sub 'order-service-${Stage}'
+          TABLE_NAME: !Sub 'order-table-${Stage}'
       Tags:
         org: cedarmeadowmeats
         env: !Ref Stage

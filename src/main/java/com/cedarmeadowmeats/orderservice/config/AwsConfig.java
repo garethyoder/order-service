@@ -15,7 +15,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -43,7 +43,7 @@ public class AwsConfig {
     DynamoDbClient dynamoDbClient() {
         DynamoDbClient dynamoDbClient;
         List<String> accessParams = Stream.of(amazonAWSAccessKey, amazonAWSSecretKey, amazonDynamoDBEndpoint)
-                .filter(Objects::isNull)
+                .filter(Predicate.not(String::isEmpty))
                 .collect(Collectors.toList());
         if (ObjectUtils.isEmpty(accessParams)) {
             LOGGER.info("DynamoDbClient defined by IAM roles");
