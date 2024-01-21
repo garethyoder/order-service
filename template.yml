@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Order Service API written with SpringBoot with the aws-serverless-java-container library
 
+Parameters:
+  Stage:
+    Type: String
+    Default: test
+
 Globals:
   Api:
     # API Gateway regional endpoints
@@ -12,36 +17,33 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: com.cedarmeadowmeats.orderservice.StreamLambdaHandler::handleRequest
-#      Layers:
-#        - arn:aws:lambda:us-east-1:753240598075:layer:LambdaAdapterLayerX86:18
       Runtime: java21
+#      SnapStart:
+#        ApplyOn: PublishedVersions
       CodeUri: .
       MemorySize: 1512
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
-            TableName: order-service-test
+            TableName: !Sub 'order-service-${Stage}'
       Timeout: 60
       Environment:
         Variables:
           org: cedarmeadowmeats
-          eng: test
-#          AWS_LAMBDA_EXEC_WRAPPER: /opt/bootstrap
-#          AWS_LWA_READINESS_CHECK_PATH: /actuator/health
-          JAVA_TOOL_OPTIONS: -Dspring.profiles.active=test
+          eng: !Ref Stage
+          SPRING_PROFILES_ACTIVE: !Ref Stage
+          JAVA_TOOL_OPTIONS: !Sub '-Dspring.profiles.active=${Stage}'
           MAIN_CLASS: com.cedarmeadowmeats.orderservice.OrderServiceApplication
+          TABLE_NAME: !Sub 'order-service-${Stage}'
       Tags:
         org: cedarmeadowmeats
-        eng: test
+        env: !Ref Stage
       Events:
         HttpApiEvent:
           Type: HttpApi
           Properties:
             TimeoutInMillis: 20000
             PayloadFormatVersion: '1.0'
-#    Metadata:
-#      SkipBuild: True
-#      BuildMethod: Makefile
 
 Outputs:
   SpringBootOrderServiceApi:
