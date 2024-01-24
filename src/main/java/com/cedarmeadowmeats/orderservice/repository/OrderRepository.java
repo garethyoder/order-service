@@ -1,6 +1,8 @@
 package com.cedarmeadowmeats.orderservice.repository;
 
+import com.cedarmeadowmeats.orderservice.model.FormEnum;
 import com.cedarmeadowmeats.orderservice.model.OrderFormSelectionEnum;
+import com.cedarmeadowmeats.orderservice.model.OrganizationIdEnum;
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ import static software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional.ke
 @Repository
 public class OrderRepository {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Value("${dynamodb.tableName}")
     private String tableName;
@@ -72,10 +74,10 @@ public class OrderRepository {
             .addAttribute(EnhancedType.of(OrderFormSelectionEnum.class), a -> a.name("selection")
                     .getter(Submission::getOrderFormSelectionEnum)
                     .setter(Submission::setOrderFormSelectionEnum))
-            .addAttribute(String.class, a -> a.name("form")
+            .addAttribute(EnhancedType.of(FormEnum.class), a -> a.name("form")
                     .getter(Submission::getForm)
                     .setter(Submission::setForm))
-            .addAttribute(String.class, a -> a.name("organizationId")
+            .addAttribute(EnhancedType.of(OrganizationIdEnum.class), a -> a.name("organizationId")
                     .getter(Submission::getOrganizationId)
                     .setter(Submission::setOrganizationId))
             .addAttribute(ZonedDateTime.class, a -> a.name("createdDate")

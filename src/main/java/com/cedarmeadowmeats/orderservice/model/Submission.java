@@ -8,9 +8,9 @@ public class Submission {
     private String email;
     private String phone;
     private String comments;
-    private String form;
+    private FormEnum form;
     private OrderFormSelectionEnum orderFormSelectionEnum;
-    private String organizationId;
+    private OrganizationIdEnum organizationId;
     private ZonedDateTime createdDate;
     private ZonedDateTime lastUpdatedDate;
     private Integer version;
@@ -76,11 +76,11 @@ public class Submission {
         this.orderFormSelectionEnum = orderFormSelectionEnum;
     }
 
-    public String getOrganizationId() {
+    public OrganizationIdEnum getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(OrganizationIdEnum organizationId) {
         this.organizationId = organizationId;
     }
 
@@ -92,11 +92,11 @@ public class Submission {
         this.comments = comments;
     }
 
-    public String getForm() {
+    public FormEnum getForm() {
         return form;
     }
 
-    public void setForm(String form) {
+    public void setForm(FormEnum form) {
         this.form = form;
     }
 

@@ -1,3 +1,11 @@
+order-service:
+  email:
+    sender: Gareth Yoder <gyoder@cedarmeadowmeats.com>
+    no-reply-sender: noReply <noReply@cedarmeadowmeats.com>
+    admin-emails: >
+      Gareth Yoder <gyoder@cedarmeadowmeats.com>,
+      Joy Yoder <jyoder@cedarmeadowmeats.com>
+
 ---
 spring:
   config:

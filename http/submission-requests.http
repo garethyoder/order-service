@@ -4,12 +4,18 @@ Content-Type: application/json
 
 {
   "name": "Script Test",
-  "email": "test@test.com",
+  "email": "client@test.com",
   "phone": "123-456-7890",
-  "form": "submission-form",
   "comments": "This is a test comment",
-  "organizationId": "test-org-id"
+  "form": "contact-form",
+  "organizationId": "cedarmeadowmeats"
 }
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
 ### Order Form Submission
 POST http://localhost:8080/order-form/submit
@@ -17,10 +23,16 @@ Content-Type: application/json
 
 {
   "name": "Order Form Name Test",
-  "email": "test@test.com",
+  "email": "client@test.com",
   "phone": "222-456-7890",
   "form": "order-form",
   "selection": "whole-steer",
   "comments": "This is a test comment for the order form",
-  "organizationId": "test-org-id-2"
+  "organizationId": "cedarmeadowmeats"
 }
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

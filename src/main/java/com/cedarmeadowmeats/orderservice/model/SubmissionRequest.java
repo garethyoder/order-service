@@ -1,15 +1,7 @@
 package com.cedarmeadowmeats.orderservice.model;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import software.amazon.awssdk.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "form")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = OrderFormSubmissionRequest.class, name = "order-form"),
-})
 public class SubmissionRequest {
     @NotNull
     protected final String name;
@@ -18,11 +10,12 @@ public class SubmissionRequest {
     @NotNull
     protected final String phone;
     protected final String comments;
-    protected final String form;
-    protected final String organizationId;
+
+    protected final FormEnum form;
+    protected final OrganizationIdEnum organizationId;
 
     public SubmissionRequest(@NotNull String name, @NotNull String email, @NotNull String phone, String comments,
-                             String form, String organizationId) {
+                             FormEnum form, OrganizationIdEnum organizationId) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -47,11 +40,11 @@ public class SubmissionRequest {
         return comments;
     }
 
-    public String getForm() {
+    public FormEnum getForm() {
         return form;
     }
 
-    public String getOrganizationId() {
+    public OrganizationIdEnum getOrganizationId() {
         return organizationId;
     }
 

@@ -26,7 +26,7 @@ import static org.testcontainers.containers.localstack.LocalStackContainer.Servi
 })
 public class TestContainersConfig {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:3.0.2");
 

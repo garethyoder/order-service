@@ -1,8 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.2.1"
+    id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
-//    id("org.graalvm.buildtools.native") version "0.9.28"
 }
 
 group = "com.cedarmeadowmeats"
@@ -20,14 +19,17 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.22.10"))
+    implementation(platform("software.amazon.awssdk:bom:2.23.7"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:dynamodb-enhanced")
+    implementation("software.amazon.awssdk:sesv2")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
-//    Dev tools not working with sam build
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-docker-compose")
     implementation("org.springframework.boot:spring-boot-devtools")
     implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:2.0.0-M2")
+    implementation("com.squareup:square:37.0.0.20240118")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")

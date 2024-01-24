@@ -9,7 +9,7 @@ public final class OrderFormSubmissionRequest extends SubmissionRequest {
     @JsonProperty("selection")
     private final OrderFormSelectionEnum orderFormSelectionEnum;
 
-    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, String form, String organizationId, OrderFormSelectionEnum orderFormSelectionEnum) {
+    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, OrderFormSelectionEnum orderFormSelectionEnum) {
         super(name, email, phone, comments, form, organizationId);
         this.orderFormSelectionEnum = orderFormSelectionEnum;
     }

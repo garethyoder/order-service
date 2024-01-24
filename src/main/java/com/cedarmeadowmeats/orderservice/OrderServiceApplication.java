@@ -10,6 +10,8 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.io.IOException;
+
 @SpringBootApplication
 @Import({ OrderController.class })
 public class OrderServiceApplication {
@@ -30,7 +32,7 @@ public class OrderServiceApplication {
         return new RequestMappingHandlerAdapter();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SpringApplication.run(OrderServiceApplication.class, args);
     }
 

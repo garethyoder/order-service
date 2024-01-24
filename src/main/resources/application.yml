@@ -4,6 +4,23 @@ spring:
   docker:
     compose:
       enabled: false
+order-service:
+  email:
+    sender: Gareth Yoder <gyoder@cedarmeadowmeats.com>
+    no-reply-sender: noReply <noReply@cedarmeadowmeats.com>
+    admin-emails: >
+      Gareth Yoder <gyoder@cedarmeadowmeats.com>,
+      Joy Yoder <jyoder@cedarmeadowmeats.com>
+
+---
+spring:
+  config:
+    activate:
+      on-profile: tc
+order-service:
+  email:
+    sender: sender@test.com
+    no-reply-sender: noReply@test.com
 ---
 spring:
   config:
@@ -17,6 +34,8 @@ amazon:
     access-key: 1
     secret-key: 2
   dynamodb:
+    endpoint: http://localhost:4566/
+  ses:
     endpoint: http://localhost:4566/
 dynamodb:
   tableName: order-table-local
