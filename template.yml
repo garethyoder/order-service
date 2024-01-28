@@ -6,6 +6,10 @@ Parameters:
   Stage:
     Type: String
     Default: test
+    Description: (Required) Enter test, prod. Default is test.
+    AllowedValues:
+      - test
+      - prod
 
 Globals:
   Api:
@@ -25,7 +29,7 @@ Resources:
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
-            TableName: !Sub 'order-table-${Stage}'
+            TableName: !Sub 'OrderTable-${Stage}'
       Timeout: 60
       Environment:
         Variables:
@@ -34,7 +38,7 @@ Resources:
           SPRING_PROFILES_ACTIVE: !Ref Stage
           JAVA_TOOL_OPTIONS: !Sub '-Dspring.profiles.active=${Stage}'
           MAIN_CLASS: com.cedarmeadowmeats.orderservice.OrderServiceApplication
-          TABLE_NAME: !Sub 'order-table-${Stage}'
+          TABLE_NAME: !Sub 'OrderTable-${Stage}'
       Tags:
         org: cedarmeadowmeats
         env: !Ref Stage

@@ -12,7 +12,7 @@ spring:
     activate:
       on-profile: tc
 dynamodb:
-  tableName: order-table-tc
+  tableName: OrderTable-tc
 amazon:
   aws:
     access-key: 1

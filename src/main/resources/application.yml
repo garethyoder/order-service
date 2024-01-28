@@ -5,6 +5,8 @@ spring:
     compose:
       enabled: false
 order-service:
+  square:
+    access-token: ${SQUARE_SANDBOX_ACCESS_KEY}
   email:
     sender: Gareth Yoder <gyoder@cedarmeadowmeats.com>
     no-reply-sender: noReply <noReply@cedarmeadowmeats.com>
@@ -38,7 +40,7 @@ amazon:
   ses:
     endpoint: http://localhost:4566/
 dynamodb:
-  tableName: order-table-local
+  tableName: OrderTable-local
 
 ---
 spring:
@@ -46,7 +48,7 @@ spring:
     activate:
       on-profile: test
 dynamodb:
-  tableName: order-table-test
+  tableName: OrderTable-test
 
 ---
 spring:
@@ -54,5 +56,5 @@ spring:
     activate:
       on-profile: prod
 dynamodb:
-  tableName: order-table-prod
+  tableName: OrderTable-prod
 
