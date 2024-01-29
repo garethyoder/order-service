@@ -3,6 +3,7 @@ package com.cedarmeadowmeats.orderservice;
 import com.cedarmeadowmeats.orderservice.controller.OrderController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.HandlerAdapter;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import java.io.IOException;
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 @Import({ OrderController.class })
 public class OrderServiceApplication {
 

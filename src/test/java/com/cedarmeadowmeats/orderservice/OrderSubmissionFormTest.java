@@ -57,12 +57,12 @@ public class OrderSubmissionFormTest {
 
     @Test
     public void submitOrder() throws Exception {
-        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Smith", "client@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER);
+        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Smith", "johnsmith@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER);
 
         this.mockMvc.perform(post("/order-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(orderFormSubmissionRequest))).andExpect(status().isOk());
 
         // verify the data is created in the DB
-        List<Submission> result = orderRepository.getSubmissionByEmail("client@test.com");
+        List<Submission> result = orderRepository.getSubmissionByEmail("johnsmith@test.com");
         Assertions.assertNotNull(result);
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals(orderFormSubmissionRequest.getName(), result.getFirst().getName());

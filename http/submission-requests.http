@@ -1,14 +1,14 @@
 ### Generic Form Submission
-POST http://localhost:8080/submit
+POST {{base-url}}/submit
 Content-Type: application/json
 
 {
-  "name": "Script Test",
-  "email": "client@test.com",
-  "phone": "123-456-7890",
-  "comments": "This is a test comment",
-  "form": "contact-form",
-  "organizationId": "cedarmeadowmeats"
+  "name": "{{name}}",
+  "email": "{{email}}",
+  "phone": "{{phone}}",
+  "comments": "{{comments}}",
+  "form": "{{form}}",
+  "organizationId": "{{organizationId}}"
 }
 
 > {%
@@ -18,17 +18,17 @@ Content-Type: application/json
 %}
 
 ### Order Form Submission
-POST http://localhost:8080/order-form/submit
+POST {{base-url}}/order-form/submit
 Content-Type: application/json
 
 {
-  "name": "Order Form Name Test",
-  "email": "client@test.com",
-  "phone": "222-456-7890",
-  "form": "order-form",
+  "name": "{{name}}",
+  "email": "{{email}}",
+  "phone": "{{phone}}",
+  "comments": "{{comments}}",
+  "form": "{{form}}",
   "selection": "whole-steer",
-  "comments": "This is a test comment for the order form",
-  "organizationId": "cedarmeadowmeats"
+  "organizationId": "{{organizationId}}"
 }
 
 > {%
@@ -38,7 +38,7 @@ Content-Type: application/json
 %}
 
 ### Test Get Customers
-GET http://localhost:8080/customers
+GET {{base-url}}/customers
 Content-Type: application/json
 
 > {%

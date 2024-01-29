@@ -59,7 +59,7 @@ public class SubmissionFormTest {
 
     @Test
     public void submitOrder() throws Exception {
-        SubmissionRequest submissionRequest = new SubmissionRequest("test", "client@test.com", "717-236-3456", "test comments", FormEnum.CONTACT_FORM, OrganizationIdEnum.CEDAR_MEADOW_NATURALS);
+        SubmissionRequest submissionRequest = new SubmissionRequest("John Doe", "client@test.com", "717-236-3456", "test comments", FormEnum.CONTACT_FORM, OrganizationIdEnum.CEDAR_MEADOW_NATURALS);
 
         this.mockMvc.perform(post("/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(submissionRequest))).andExpect(status().isOk());
 
@@ -86,7 +86,7 @@ public class SubmissionFormTest {
         assertThat(alertEmail.destination().toAddresses(), hasItems("Joy Yoder <jyoder@cedarmeadowmeats.com>"));
         Assertions.assertEquals("noReply <noReply@cedarmeadowmeats.com>", alertEmail.fromEmailAddress(), "Verify the \"noReply\" from sender email.");
         Assertions.assertEquals(submissionRequest.getEmail(), alertEmail.replyToAddresses().getFirst(), "Verify the reply to is the client email.");
-        Assertions.assertEquals("Cedar Meadow Meats Order Form: John Smith", alertEmail.content().simple().subject().data(), "Verify the email subject line.");
+        Assertions.assertEquals("Cedar Meadow Naturals Contact Form: John Doe", alertEmail.content().simple().subject().data(), "Verify the email subject line.");
         assertThat("Alert email must contain client's name.", alertEmail.content().simple().body().toString(), containsString(submissionRequest.getName()));
         assertThat("Alert email must contain client's phone.", alertEmail.content().simple().body().toString(), containsString(submissionRequest.getPhone()));
         assertThat("Alert email must contain client's email.", alertEmail.content().simple().body().toString(), containsString(submissionRequest.getEmail()));

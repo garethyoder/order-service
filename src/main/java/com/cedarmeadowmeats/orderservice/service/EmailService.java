@@ -1,5 +1,6 @@
 package com.cedarmeadowmeats.orderservice.service;
 
+import com.cedarmeadowmeats.orderservice.config.EmailTemplateLocationConfig;
 import com.cedarmeadowmeats.orderservice.model.EmailTemplate;
 import com.cedarmeadowmeats.orderservice.model.FormEnum;
 import com.cedarmeadowmeats.orderservice.model.OrganizationIdEnum;
@@ -26,6 +27,8 @@ public class EmailService {
 
     private final SesV2Client sesV2Client;
 
+    private final EmailTemplateLocationConfig emailTemplateLocationConfig;
+
     @Value("${order-service.email.sender:}")
     String sender;
 
@@ -35,8 +38,9 @@ public class EmailService {
     @Value("${order-service.email.admin-emails:}")
     List<String> adminEmails;
 
-    public EmailService(SesV2Client sesV2Client) {
+    public EmailService(SesV2Client sesV2Client, EmailTemplateLocationConfig emailTemplateLocationConfig) {
         this.sesV2Client = sesV2Client;
+        this.emailTemplateLocationConfig = emailTemplateLocationConfig;
     }
 
     public SendEmailResponse sendSubmissionAlertEmail(final Submission submission) throws SesV2Exception {
@@ -124,7 +128,7 @@ public class EmailService {
 
         String body;
         if (FormEnum.ORDER_FORM.equals(submission.getForm())) {
-            body = Files.readString(Path.of("src/main/resources/templates/email/alertEmail/orderFormAlertEmail.html"))
+            body = Files.readString(Path.of(emailTemplateLocationConfig.orderFormAlertEmail()))
                     .replace("${companyName}", OrganizationIdEnum.getCompanyName(submission.getOrganizationId()))
                     .replace("${name}", submission.getName())
                     .replace("${phone}", submission.getPhone())
@@ -132,7 +136,7 @@ public class EmailService {
                     .replace("${selection}", submission.getOrderFormSelectionEnum().getValue())
                     .replace("${comments}", submission.getComments());
         } else {
-            body = Files.readString(Path.of("src/main/resources/templates/email/alertEmail/defaultAlertEmail.html"))
+            body = Files.readString(Path.of(emailTemplateLocationConfig.defaultAlertEmail()))
                     .replace("${companyName}", OrganizationIdEnum.getCompanyName(submission.getOrganizationId()))
                     .replace("${name}", submission.getName())
                     .replace("${phone}", submission.getPhone())
@@ -148,7 +152,7 @@ public class EmailService {
     public EmailTemplate getCustomerConfirmationEmailTemplate(@NotNull final Submission submission) throws IOException {
         String subject = "Thank you for contacting " + OrganizationIdEnum.getCompanyName(submission.getOrganizationId());
 
-        String body = Files.readString(Path.of("src/main/resources/templates/email/confirmationEmail/confirmationToClientEmail.html"))
+        String body = Files.readString(Path.of(emailTemplateLocationConfig.confirmationToClientEmail()))
                 .replace("${companyName}", OrganizationIdEnum.getCompanyName(submission.getOrganizationId()))
                 .replace("${name}", submission.getName())
                 .replace("${phone}", submission.getPhone())
