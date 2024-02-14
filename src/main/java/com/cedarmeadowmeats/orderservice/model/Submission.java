@@ -8,6 +8,8 @@ public class Submission {
     private String email;
     private String phone;
     private String comments;
+
+    private String referral;
     private FormEnum form;
     private OrderFormSelectionEnum orderFormSelectionEnum;
     private OrganizationIdEnum organizationId;
@@ -33,6 +35,7 @@ public class Submission {
         this.phone = orderFormSubmissionRequest.getPhone();
         this.orderFormSelectionEnum = orderFormSubmissionRequest.orderFormSelectionEnum();
         this.comments = orderFormSubmissionRequest.getComments();
+        this.referral = orderFormSubmissionRequest.getReferral();
         this.form = orderFormSubmissionRequest.getForm();
         this.organizationId = orderFormSubmissionRequest.getOrganizationId();
         this.createdDate = ZonedDateTime.now();
@@ -90,6 +93,14 @@ public class Submission {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getReferral() {
+        return referral;
+    }
+
+    public void setReferral(String referral) {
+        this.referral = referral;
     }
 
     public FormEnum getForm() {

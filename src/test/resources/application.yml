@@ -1,13 +1,4 @@
-order-service:
-  email:
-    sender: Gareth Yoder <gyoder@cedarmeadowmeats.com>
-    no-reply-sender: noReply <noReply@cedarmeadowmeats.com>
-    admin-emails: >
-      Gareth Yoder <gyoder@cedarmeadowmeats.com>,
-      Joy Yoder <jyoder@cedarmeadowmeats.com>
-    defaultAlertEmail: src/main/resources/templates/email/alertEmail/defaultAlertEmail.html
-    orderFormAlertEmail: src/main/resources/templates/email/alertEmail/orderFormAlertEmail.html
-    confirmationToClientEmail: src/main/resources/templates/email/confirmationEmail/confirmationToClientEmail.html
+
 
 ---
 spring:

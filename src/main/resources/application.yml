@@ -4,31 +4,13 @@ spring:
   docker:
     compose:
       enabled: false
-order-service:
-  square:
-    access-token: ${SQUARE_SANDBOX_ACCESS_KEY}
-  email:
-    sender: Gareth Yoder <gyoder@cedarmeadowmeats.com>
-    no-reply-sender: noReply <noReply@cedarmeadowmeats.com>
-    admin-emails: >
-      Gareth Yoder <gyoder@cedarmeadowmeats.com>,
-      Joy Yoder <jyoder@cedarmeadowmeats.com>
-    defaultAlertEmail: templates/email/alertEmail/defaultAlertEmail.html
-    orderFormAlertEmail: templates/email/alertEmail/orderFormAlertEmail.html
-    confirmationToClientEmail: templates/email/confirmationEmail/confirmationToClientEmail.html
 
 ---
 spring:
   config:
     activate:
       on-profile: tc
-order-service:
-  email:
-    sender: sender@test.com
-    no-reply-sender: noReply@test.com
-    defaultAlertEmail: src/main/resources/templates/email/alertEmail/defaultAlertEmail.html
-    orderFormAlertEmail: src/main/resources/templates/email/alertEmail/orderFormAlertEmail.html
-    confirmationToClientEmail: src/main/resources/templates/email/confirmationEmail/confirmationToClientEmail.html
+
 ---
 spring:
   config:
@@ -43,15 +25,9 @@ amazon:
     secret-key: 2
   dynamodb:
     endpoint: http://localhost:4566/
-  ses:
-    endpoint: http://localhost:4566/
+
 dynamodb:
   tableName: OrderTable-local
-order-service:
-  email:
-    defaultAlertEmail: src/main/resources/templates/email/alertEmail/defaultAlertEmail.html
-    orderFormAlertEmail: src/main/resources/templates/email/alertEmail/orderFormAlertEmail.html
-    confirmationToClientEmail: src/main/resources/templates/email/confirmationEmail/confirmationToClientEmail.html
 ---
 spring:
   config:

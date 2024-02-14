@@ -1,6 +1,7 @@
 package com.cedarmeadowmeats.orderservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.lang.Nullable;
 import software.amazon.awssdk.annotations.NotNull;
 
 public final class OrderFormSubmissionRequest extends SubmissionRequest {
@@ -9,9 +10,13 @@ public final class OrderFormSubmissionRequest extends SubmissionRequest {
     @JsonProperty("selection")
     private final OrderFormSelectionEnum orderFormSelectionEnum;
 
-    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, OrderFormSelectionEnum orderFormSelectionEnum) {
+    @Nullable
+    private final String referral;
+
+    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, OrderFormSelectionEnum orderFormSelectionEnum, @Nullable String referral) {
         super(name, email, phone, comments, form, organizationId);
         this.orderFormSelectionEnum = orderFormSelectionEnum;
+        this.referral = referral;
     }
 
 
@@ -22,5 +27,10 @@ public final class OrderFormSubmissionRequest extends SubmissionRequest {
 
     public OrderFormSelectionEnum getOrderFormSelectionEnum() {
         return orderFormSelectionEnum;
+    }
+
+    @Nullable
+    public String getReferral() {
+        return referral;
     }
 }

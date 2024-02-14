@@ -37,12 +37,24 @@ Content-Type: application/json
     });
 %}
 
-### Test Get Customers
-GET {{base-url}}/customers
+### Order Form Submission With Referral
+POST {{base-url}}/order-form/submit
 Content-Type: application/json
+
+{
+  "name": "{{name}}",
+  "email": "{{email}}",
+  "phone": "{{phone}}",
+  "comments": "{{comments}}",
+  "referral": "Jane Doe",
+  "form": "{{form}}",
+  "selection": "whole-steer",
+  "organizationId": "{{organizationId}}"
+}
 
 > {%
     client.test("Request executed successfully", function() {
         client.assert(response.status === 200, "Response status is not 200");
     });
 %}
+
