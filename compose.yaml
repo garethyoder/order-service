@@ -10,7 +10,7 @@ services:
          - AWS_CBOR_DISABLE=1
          - DOCKER_HOST=unix:///var/run/docker.sock
          - HOSTNAME=localstack
-         - SERVICES=dynamodb
+         - SERVICES=dynamodb,ses
          - AWS_DEFAULT_REGION=us-east-1
       ports:
          - '4566:4566'

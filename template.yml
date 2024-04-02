@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Order Service API written with SpringBoot with the aws-serverless-java-container library
+
+Parameters:
+  Environment:
+    Type: String
+    Default: test
+    Description: (Required) Enter test, prod. Default is test.
+    AllowedValues:
+      - test
+      - prod
+
+Globals:
+  Api:
+    # API Gateway regional endpoints
+    EndpointConfiguration: REGIONAL
+
+Resources:
+  OrderServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 'order-service-${Environment}'
+      Handler: com.cedarmeadowmeats.orderservice.StreamLambdaHandler::handleRequest
+      Runtime: java21
+#      SnapStart:
+#        ApplyOn: PublishedVersions
+      CodeUri: .
+      MemorySize: 1512
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - DynamoDBCrudPolicy:
+            TableName: !Sub 'OrderTable-${Environment}'
+      Timeout: 60
+      Environment:
+        Variables:
+          org: cedarmeadowmeats
+          eng: !Ref Environment
+          SPRING_PROFILES_ACTIVE: !Ref Environment
+          JAVA_TOOL_OPTIONS: !Sub '-Dspring.profiles.active=${Environment}'
+          MAIN_CLASS: com.cedarmeadowmeats.orderservice.OrderServiceApplication
+          TABLE_NAME: !Sub 'OrderTable-${Environment}'
+      Tags:
+        org: cedarmeadowmeats
+        env: !Ref Environment
+      Events:
+        HttpApiEvent:
+          Type: HttpApi
+          Properties:
+            TimeoutInMillis: 20000
+            PayloadFormatVersion: '1.0'
+
+Outputs:
+  SpringBootOrderServiceApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/'
+    Export:
+      Name: SpringBootOrderServiceApi
