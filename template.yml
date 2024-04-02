@@ -2,7 +2,20 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Order Service API written with SpringBoot with the aws-serverless-java-container library
 
+Mappings:
+  EnvVariables:
+    test:
+      CORS:
+        - https://s3.amazonaws.com
+    prod:
+      CORS:
+        - https://www.cedarmeadowmeats.com
+
 Parameters:
+  AppName:
+    Description: Name of Application
+    Type: String
+    Default: order-service
   Environment:
     Type: String
     Default: test
@@ -17,10 +30,31 @@ Globals:
     EndpointConfiguration: REGIONAL
 
 Resources:
+  HttpApi:
+    Type: 'AWS::ApiGatewayV2::Api'
+    Properties:
+      Name: !Sub '${AppName}-${Environment}'
+      Description: An Amazon API Gateway HTTP API.
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins: !FindInMap [EnvVariables, !Ref Environment, CORS]
+        AllowMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          - POST
+        AllowHeaders:
+          - Content-Type
+          - X-Amz-Date
+          - Authorization
+          - X-Api-Key
+          - X-Amz-Security-Token
+          - X-Amz-User-Agent
+      Target: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${OrderServiceFunction}/invocations
   OrderServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub 'order-service-${Environment}'
+      FunctionName: !Sub '${AppName}-${Environment}'
       Handler: com.cedarmeadowmeats.orderservice.StreamLambdaHandler::handleRequest
       Runtime: java21
 #      SnapStart:
@@ -50,9 +84,16 @@ Resources:
             TimeoutInMillis: 20000
             PayloadFormatVersion: '1.0'
 
+  # Function permissions grant an AWS service or another account permission to use a function
+  FunctionResourcePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      Principal: apigateway.amazonaws.com
+      FunctionName: !Ref OrderServiceFunction
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*'
+
 Outputs:
-  SpringBootOrderServiceApi:
-    Description: URL for application
-    Value: !Sub 'https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/'
-    Export:
-      Name: SpringBootOrderServiceApi
+  HttpApiEndpoint:
+    Description: The default endpoint for the HTTP API.
+    Value: !GetAtt HttpApi.ApiEndpoint
