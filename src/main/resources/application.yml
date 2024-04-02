@@ -4,6 +4,7 @@ spring:
   docker:
     compose:
       enabled: false
+cors: http://localhost
 
 ---
 spring:
@@ -28,6 +29,7 @@ amazon:
 
 dynamodb:
   tableName: OrderTable-local
+
 ---
 spring:
   config:
@@ -35,6 +37,7 @@ spring:
       on-profile: test
 dynamodb:
   tableName: OrderTable-test
+cors: https://s3.amazonaws.com
 
 ---
 spring:
@@ -43,4 +46,5 @@ spring:
       on-profile: prod
 dynamodb:
   tableName: OrderTable-prod
+cors: https://www.cedarmeadowmeats.com
 

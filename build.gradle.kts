@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.2.2"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -18,7 +18,7 @@ repositories {
     maven("https://repo.spring.io/snapshot")
 }
 
-extra["awsServerlessJavaContainerSpringboot"] = "2.0.0-M2"
+extra["awsServerlessJavaContainerSpringboot"] = "2.0.0"
 
 dependencies {
     implementation(platform("software.amazon.awssdk:bom:2.23.7"))
