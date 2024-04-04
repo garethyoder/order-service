@@ -4,6 +4,10 @@ spring:
   docker:
     compose:
       enabled: false
+management:
+  health:
+    diskspace:
+      enabled: false
 cors: http://localhost
 
 ---

@@ -19,3 +19,6 @@ To deploy SAM for test:
 
 To deploy SAM for prod:
 `sam deploy --config-env prod`
+
+To delete a stack run:
+`sam delete --stack-name order-service-test`
