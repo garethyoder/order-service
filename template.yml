@@ -34,7 +34,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::Api'
     Properties:
       Name: !Sub '${AppName}-${Environment}'
-      Description: An Amazon API Gateway HTTP API.
+      Description: !Sub '${AppName}-${Environment}'
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins: !FindInMap [EnvVariables, !Ref Environment, CORS]
@@ -51,6 +51,10 @@ Resources:
           - X-Amz-Security-Token
           - X-Amz-User-Agent
       Target: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${OrderServiceFunction}/invocations
+      Tags:
+        org: cedarmeadowmeats
+        env: !Ref Environment
+
   OrderServiceFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -60,7 +64,7 @@ Resources:
 #      SnapStart:
 #        ApplyOn: PublishedVersions
       CodeUri: .
-      MemorySize: 1512
+      MemorySize: 2048
       Policies:
         - AWSLambdaBasicExecutionRole
         - DynamoDBCrudPolicy:
@@ -81,6 +85,7 @@ Resources:
         HttpApiEvent:
           Type: HttpApi
           Properties:
+            ApiId: !Ref HttpApi
             TimeoutInMillis: 20000
             PayloadFormatVersion: '1.0'
 
