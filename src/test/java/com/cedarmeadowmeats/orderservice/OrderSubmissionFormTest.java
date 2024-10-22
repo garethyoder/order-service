@@ -76,6 +76,6 @@ public class OrderSubmissionFormTest {
         Assertions.assertNotNull(result.getFirst().getCreatedDate());
         Assertions.assertNotNull(result.getFirst().getLastUpdatedDate());
         Assertions.assertNotNull(result.getFirst().getVersion());
-
     }
+
 }
