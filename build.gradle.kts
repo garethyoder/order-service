@@ -1,11 +1,11 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.3.2"
+    id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.2-SNAPSHOT"
+version = "0.0.3-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -18,10 +18,10 @@ repositories {
     maven("https://repo.spring.io/snapshot")
 }
 
-extra["awsServerlessJavaContainerSpringboot"] = "2.0.0"
+extra["awsServerlessJavaContainerSpringboot"] = "2.0.3"
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.26.25"))
+    implementation(platform("software.amazon.awssdk:bom:2.28.26"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:dynamodb-enhanced")
     implementation("org.springframework.boot:spring-boot-starter-actuator")

@@ -29,8 +29,8 @@ Content-Type: application/json
   "email": "{{email}}",
   "phone": "{{phone}}",
   "comments": "{{comments}}",
-  "form": "{{form}}",
-  "selection": "whole-steer",
+  "form": "order-form",
+  "selection": "eighth-steer",
   "organizationId": "{{organizationId}}"
 }
 
@@ -50,7 +50,7 @@ Content-Type: application/json
   "phone": "{{phone}}",
   "comments": "{{comments}}",
   "referral": "Jane Doe",
-  "form": "{{form}}",
+  "form": "order-form",
   "selection": "whole-steer",
   "organizationId": "{{organizationId}}"
 }
@@ -74,3 +74,25 @@ Sec-Fetch-Dest: empty
 Sec-Fetch-Mode: cors
 Sec-Fetch-Site: cross-site
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36
+
+
+### DJ Form Submission
+POST {{base-url}}/dj-form/submit
+Content-Type: application/json
+
+{
+  "name": "{{name}}",
+  "email": "{{email}}",
+  "phone": "{{phone}}",
+  "comments": "{{comments}}",
+  "venue": "Test Venue",
+  "eventDate": "01-25-2024",
+  "form": "dj-form",
+  "organizationId": "gyoderaudioexpressions"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
