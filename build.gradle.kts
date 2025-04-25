@@ -1,11 +1,11 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.3.4"
+    id("org.springframework.boot") version "3.4.4"
     id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.3-SNAPSHOT"
+version = "0.0.5"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -18,10 +18,12 @@ repositories {
     maven("https://repo.spring.io/snapshot")
 }
 
-extra["awsServerlessJavaContainerSpringboot"] = "2.0.3"
+extra["awssdk"] = "2.31.27"
+extra["awsServerlessJavaContainerSpringboot"] = "2.1.3"
+extra["localstack"] = "1.20.5"
 
 dependencies {
-    implementation(platform("software.amazon.awssdk:bom:2.28.26"))
+    implementation(platform("software.amazon.awssdk:bom:${property("awssdk")}"))
     implementation("software.amazon.awssdk:dynamodb")
     implementation("software.amazon.awssdk:dynamodb-enhanced")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -33,7 +35,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("org.testcontainers:localstack:1.20.0")
+    testImplementation("org.testcontainers:localstack:${property("localstack")}")
     testImplementation("org.testcontainers:junit-jupiter")
 }
 
