@@ -1,14 +1,16 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.4.4"
+    id("org.springframework.boot") version "3.5.3"
     id("io.spring.dependency-management") version "1.1.6"
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.5"
+version = "0.0.6"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
@@ -20,7 +22,7 @@ repositories {
 
 extra["awssdk"] = "2.31.27"
 extra["awsServerlessJavaContainerSpringboot"] = "2.1.3"
-extra["localstack"] = "1.20.5"
+extra["localstack"] = "1.21.2"
 
 dependencies {
     implementation(platform("software.amazon.awssdk:bom:${property("awssdk")}"))
