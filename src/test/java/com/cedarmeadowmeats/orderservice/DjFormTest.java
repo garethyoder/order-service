@@ -39,7 +39,7 @@ public class DjFormTest {
 
     @Test
     public void submitDJForm() throws Exception {
-        DJContactFormSubmissionRequest djContactFormSubmissionRequest = new DJContactFormSubmissionRequest("Joe Doe", "joedoe@test.com", "123-456-7890", "test comments", FormEnum.DJ_FORM, OrganizationIdEnum.G_YODER_AUDIO_EXPRESSIONS, "05-17-2024", "My house");
+        DJContactFormSubmissionRequest djContactFormSubmissionRequest = new DJContactFormSubmissionRequest("Joe Doe", "joedoe@test.com", "123-456-7890", "test comments", FormEnum.DJ_FORM, OrganizationIdEnum.G_YODER_AUDIO_EXPRESSIONS, "05-17-2024", "My house", "bc97c48d6d64f9c362283a141be72245");
 
         this.mockMvc.perform(post("/dj-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(djContactFormSubmissionRequest))).andExpect(status().isOk());
 

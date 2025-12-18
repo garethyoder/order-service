@@ -39,7 +39,7 @@ public class SubmissionFormTest {
 
     @Test
     public void submitOrder() throws Exception {
-        SubmissionRequest submissionRequest = new SubmissionRequest("John Doe", "client@test.com", "717-236-3456", "test comments", FormEnum.CONTACT_FORM, OrganizationIdEnum.CEDAR_MEADOW_NATURALS);
+        SubmissionRequest submissionRequest = new SubmissionRequest("John Doe", "client@test.com", "717-236-3456", "test comments", FormEnum.CONTACT_FORM, OrganizationIdEnum.CEDAR_MEADOW_NATURALS, "b0b6533b4732fcf8253b9a8f76497a01");
 
         this.mockMvc.perform(post("/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(submissionRequest))).andExpect(status().isOk());
 

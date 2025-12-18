@@ -10,8 +10,8 @@ public final class DJContactFormSubmissionRequest extends SubmissionRequest {
     private final String venue;
 
 
-    public DJContactFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, String eventDate, String venue) {
-        super(name, email, phone, comments, form, organizationId);
+    public DJContactFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, String eventDate, String venue, String hashKey) {
+        super(name, email, phone, comments, form, organizationId, hashKey);
         this.eventDate = eventDate;
         this.venue = venue;
     }

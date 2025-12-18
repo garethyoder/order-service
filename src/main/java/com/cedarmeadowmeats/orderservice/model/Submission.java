@@ -18,6 +18,7 @@ public class Submission {
     private ZonedDateTime createdDate;
     private ZonedDateTime lastUpdatedDate;
     private Integer version;
+    private String hashKey;
 
     public Submission(final SubmissionRequest submissionRequest) {
         this.name = submissionRequest.getName();
@@ -57,6 +58,7 @@ public class Submission {
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
+        this.hashKey = djContactFormSubmissionRequest.getHashKey();
     }
 
     public Submission() {
@@ -165,5 +167,13 @@ public class Submission {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getHashKey() {
+        return hashKey;
+    }
+
+    public void setHashKey(String hashKey) {
+        this.hashKey = hashKey;
     }
 }
