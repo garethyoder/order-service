@@ -1,15 +1,4 @@
 cors: http://localhost
-
----
-spring:
-  config:
-    activate:
-      on-profile: tc
 dynamodb:
-  tableName: OrderTable-tc
-amazon:
-  aws:
-    access-key: 1
-    secret-key: 2
-  dynamodb:
-    endpoint: http://localhost:4566/
+  tableName: OrderTable
+

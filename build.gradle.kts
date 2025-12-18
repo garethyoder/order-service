@@ -1,15 +1,22 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.5.3"
-    id("io.spring.dependency-management") version "1.1.6"
+    id("org.springframework.boot") version "3.5.8"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("org.openrewrite.rewrite") version("latest.release")
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.6"
+version = "0.0.7"
+
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot4.UpgradeSpringBoot_4_0")
+    activeRecipe("org.openrewrite.java.migrate.UpgradeToJava25")
+    setExportDatatables(true)
+}
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -21,7 +28,7 @@ repositories {
 }
 
 extra["awssdk"] = "2.31.27"
-extra["awsServerlessJavaContainerSpringboot"] = "2.1.3"
+extra["awsServerlessJavaContainerSpringboot"] = "2.1.4"
 extra["localstack"] = "1.21.2"
 
 dependencies {
@@ -39,6 +46,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:localstack:${property("localstack")}")
     testImplementation("org.testcontainers:junit-jupiter")
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:latest.release"))
+    rewrite("org.openrewrite.recipe:rewrite-migrate-java")
+    rewrite("org.openrewrite.recipe:rewrite-spring:6.19.0")
 }
 
 tasks.withType<Test> {

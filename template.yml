@@ -60,7 +60,7 @@ Resources:
     Properties:
       FunctionName: !Sub '${AppName}-${Environment}'
       Handler: com.cedarmeadowmeats.orderservice.StreamLambdaHandler::handleRequest
-      Runtime: java21
+      Runtime: java25
 #      SnapStart:
 #        ApplyOn: PublishedVersions
       CodeUri: .
