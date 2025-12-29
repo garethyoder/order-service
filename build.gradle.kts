@@ -1,14 +1,23 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.4.4"
-    id("io.spring.dependency-management") version "1.1.6"
+    id("org.springframework.boot") version "3.5.8"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("org.openrewrite.rewrite") version("latest.release")
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.5"
+version = "0.0.7"
+
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot4.UpgradeSpringBoot_4_0")
+    activeRecipe("org.openrewrite.java.migrate.UpgradeToJava25")
+    setExportDatatables(true)
+}
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 repositories {
@@ -19,8 +28,8 @@ repositories {
 }
 
 extra["awssdk"] = "2.31.27"
-extra["awsServerlessJavaContainerSpringboot"] = "2.1.3"
-extra["localstack"] = "1.20.5"
+extra["awsServerlessJavaContainerSpringboot"] = "2.1.4"
+extra["localstack"] = "1.21.2"
 
 dependencies {
     implementation(platform("software.amazon.awssdk:bom:${property("awssdk")}"))
@@ -31,12 +40,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-docker-compose")
     implementation("org.springframework.boot:spring-boot-devtools")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1")
     implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:${property("awsServerlessJavaContainerSpringboot")}")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:localstack:${property("localstack")}")
     testImplementation("org.testcontainers:junit-jupiter")
+    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:latest.release"))
+    rewrite("org.openrewrite.recipe:rewrite-migrate-java")
+    rewrite("org.openrewrite.recipe:rewrite-spring:6.19.0")
 }
 
 tasks.withType<Test> {

@@ -30,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("tc")
 public class DjFormTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,9 +40,9 @@ public class DjFormTest {
 
     @Test
     public void submitDJForm() throws Exception {
-        DJContactFormSubmissionRequest djContactFormSubmissionRequest = new DJContactFormSubmissionRequest("Joe Doe", "joedoe@test.com", "123-456-7890", "test comments", FormEnum.DJ_FORM, OrganizationIdEnum.G_YODER_AUDIO_EXPRESSIONS, "05-17-2024", "My house");
+        DJContactFormSubmissionRequest djContactFormSubmissionRequest = new DJContactFormSubmissionRequest("Joe Doe", "joedoe@test.com", "123-456-7890", "test comments", FormEnum.DJ_FORM, OrganizationIdEnum.G_YODER_AUDIO_EXPRESSIONS, "05-17-2024", "My house", "3db4d385b5140046211a34ac941b03ff");
 
-        this.mockMvc.perform(post("/dj-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(djContactFormSubmissionRequest))).andExpect(status().isOk());
+        this.mockMvc.perform(post("/dj-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(djContactFormSubmissionRequest))).andExpect(status().isOk());
 
         // verify the data is created in the DB
         List<Submission> result = orderRepository.getSubmissionByEmail("joedoe@test.com");

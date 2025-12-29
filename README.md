@@ -22,3 +22,6 @@ To deploy SAM for prod:
 
 To delete a stack run:
 `sam delete --stack-name order-service-test`
+
+To update the gradle version:
+Change the version in the following file: gradle/wrapper/gradle-wrapper.properties

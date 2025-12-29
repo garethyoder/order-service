@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 @EnableWebMvc
 public class OrderController {
@@ -22,17 +24,17 @@ public class OrderController {
     }
 
     @PostMapping("/submit")
-    public void submit(final @Validated @RequestBody SubmissionRequest submissionRequest) {
+    public void submit(final @Validated @RequestBody SubmissionRequest submissionRequest) throws NoSuchAlgorithmException {
         orderService.saveSubmission(new Submission(submissionRequest));
     }
 
     @PostMapping("/order-form/submit")
-    public void submit(final @Validated @RequestBody OrderFormSubmissionRequest orderFormSubmissionRequest) {
+    public void submit(final @Validated @RequestBody OrderFormSubmissionRequest orderFormSubmissionRequest) throws NoSuchAlgorithmException {
         orderService.saveSubmission(new Submission(orderFormSubmissionRequest));
     }
 
     @PostMapping("/dj-form/submit")
-    public void submit(final @Validated @RequestBody DJContactFormSubmissionRequest djContactFormSubmissionRequest) {
+    public void submit(final @Validated @RequestBody DJContactFormSubmissionRequest djContactFormSubmissionRequest) throws NoSuchAlgorithmException {
         orderService.saveSubmission(new Submission(djContactFormSubmissionRequest));
     }
 

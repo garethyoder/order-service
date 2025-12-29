@@ -13,15 +13,18 @@ public class SubmissionRequest {
 
     protected final FormEnum form;
     protected final OrganizationIdEnum organizationId;
+    @NotNull
+    protected final String hashKey;
 
     public SubmissionRequest(@NotNull String name, @NotNull String email, @NotNull String phone, String comments,
-                             FormEnum form, OrganizationIdEnum organizationId) {
+                             FormEnum form, OrganizationIdEnum organizationId, @NotNull String hashKey) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.comments = comments;
         this.form = form;
         this.organizationId = organizationId;
+        this.hashKey = hashKey;
     }
 
     public String getName() {
@@ -47,5 +50,7 @@ public class SubmissionRequest {
     public OrganizationIdEnum getOrganizationId() {
         return organizationId;
     }
+
+    public String getHashKey() {return hashKey;}
 
 }

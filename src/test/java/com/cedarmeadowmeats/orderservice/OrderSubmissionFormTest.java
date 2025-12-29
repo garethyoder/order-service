@@ -36,7 +36,7 @@ public class OrderSubmissionFormTest {
 
     @Test
     public void submitOrder() throws Exception {
-        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Smith", "johnsmith@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER, null);
+        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Smith", "johnsmith@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER, null, "37cf583c154c1714afbb9e01334afb52");
 
         this.mockMvc.perform(post("/order-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(orderFormSubmissionRequest))).andExpect(status().isOk());
 
@@ -58,7 +58,7 @@ public class OrderSubmissionFormTest {
 
     @Test
     public void submitOrderWithReferral() throws Exception {
-        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Doe", "johndoe@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER, "Jane Doe");
+        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("John Doe", "johndoe@test.com", "123-456-7890", "test comments", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER, "Jane Doe", "02b3b173461c7dbfce5743d7b0023d75");
 
         this.mockMvc.perform(post("/order-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(orderFormSubmissionRequest))).andExpect(status().isOk());
 

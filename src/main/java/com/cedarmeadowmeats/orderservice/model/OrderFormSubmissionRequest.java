@@ -13,8 +13,8 @@ public final class OrderFormSubmissionRequest extends SubmissionRequest {
     @Nullable
     private final String referral;
 
-    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, OrderFormSelectionEnum orderFormSelectionEnum, @Nullable String referral) {
-        super(name, email, phone, comments, form, organizationId);
+    public OrderFormSubmissionRequest(String name, String email, String phone, String comments, FormEnum form, OrganizationIdEnum organizationId, OrderFormSelectionEnum orderFormSelectionEnum, @Nullable String referral, String hashKey) {
+        super(name, email, phone, comments, form, organizationId, hashKey);
         this.orderFormSelectionEnum = orderFormSelectionEnum;
         this.referral = referral;
     }

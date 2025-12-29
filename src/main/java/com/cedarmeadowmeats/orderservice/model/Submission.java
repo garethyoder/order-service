@@ -18,6 +18,7 @@ public class Submission {
     private ZonedDateTime createdDate;
     private ZonedDateTime lastUpdatedDate;
     private Integer version;
+    private String hashKey;
 
     public Submission(final SubmissionRequest submissionRequest) {
         this.name = submissionRequest.getName();
@@ -26,6 +27,7 @@ public class Submission {
         this.comments = submissionRequest.getComments();
         this.form = submissionRequest.getForm();
         this.organizationId = submissionRequest.getOrganizationId();
+        this.hashKey = submissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
@@ -40,6 +42,7 @@ public class Submission {
         this.referral = orderFormSubmissionRequest.getReferral();
         this.form = orderFormSubmissionRequest.getForm();
         this.organizationId = orderFormSubmissionRequest.getOrganizationId();
+        this.hashKey = orderFormSubmissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
@@ -54,9 +57,11 @@ public class Submission {
         this.venue = djContactFormSubmissionRequest.getVenue();
         this.form = djContactFormSubmissionRequest.getForm();
         this.organizationId = djContactFormSubmissionRequest.getOrganizationId();
+        this.hashKey = djContactFormSubmissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
+        this.hashKey = djContactFormSubmissionRequest.getHashKey();
     }
 
     public Submission() {
@@ -165,5 +170,13 @@ public class Submission {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getHashKey() {
+        return hashKey;
+    }
+
+    public void setHashKey(String hashKey) {
+        this.hashKey = hashKey;
     }
 }

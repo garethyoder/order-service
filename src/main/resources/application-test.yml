@@ -1,0 +1,10 @@
+cors: https://s3.amazonaws.com
+dynamodb.tableName: OrderTable-test
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      cors:
+        allowed-origins: "https://s3.amazonaws.com"
+
