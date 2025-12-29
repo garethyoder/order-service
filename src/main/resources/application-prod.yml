@@ -1,0 +1,10 @@
+cors: https://www.cedarmeadowmeats.com, https://s3.us-east-1.amazonaws.com/
+dynamodb.tableName: OrderTable-prod
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      cors:
+        allowed-origins: https://www.cedarmeadowmeats.com, https://s3.us-east-1.amazonaws.com/
+

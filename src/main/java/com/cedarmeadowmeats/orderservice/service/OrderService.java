@@ -19,10 +19,11 @@ public class OrderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final OrderRepository orderRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, ObjectMapper objectMapper) {
         this.orderRepository = orderRepository;
+        this.objectMapper = objectMapper;
     }
 
     public void saveSubmission(final Submission submission) throws NoSuchAlgorithmException {

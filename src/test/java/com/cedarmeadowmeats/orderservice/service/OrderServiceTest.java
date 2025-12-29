@@ -2,6 +2,8 @@ package com.cedarmeadowmeats.orderservice.service;
 
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import com.cedarmeadowmeats.orderservice.repository.OrderRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 import static com.cedarmeadowmeats.orderservice.service.OrderService.MD5_HASH;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
@@ -24,6 +25,9 @@ class OrderServiceTest {
 
     @Mock
     OrderRepository orderRepository;
+
+    @Mock
+    ObjectMapper objectMapper;
 
     @Test
     void testSaveSubmissionPassed() throws NoSuchAlgorithmException {
@@ -36,7 +40,10 @@ class OrderServiceTest {
     }
 
     @Test
-    void testSaveSubmissionFailed() throws NoSuchAlgorithmException {
+    void testSaveSubmissionFailed() throws NoSuchAlgorithmException, JsonProcessingException {
+
+        when(objectMapper.writeValueAsString(any())).thenReturn("Mapper String Here");
+
         Submission submission = new Submission();
         submission.setEmail("");
         submission.setHashKey("Failed");

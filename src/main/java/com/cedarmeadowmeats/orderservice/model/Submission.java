@@ -27,6 +27,7 @@ public class Submission {
         this.comments = submissionRequest.getComments();
         this.form = submissionRequest.getForm();
         this.organizationId = submissionRequest.getOrganizationId();
+        this.hashKey = submissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
@@ -41,6 +42,7 @@ public class Submission {
         this.referral = orderFormSubmissionRequest.getReferral();
         this.form = orderFormSubmissionRequest.getForm();
         this.organizationId = orderFormSubmissionRequest.getOrganizationId();
+        this.hashKey = orderFormSubmissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
@@ -55,6 +57,7 @@ public class Submission {
         this.venue = djContactFormSubmissionRequest.getVenue();
         this.form = djContactFormSubmissionRequest.getForm();
         this.organizationId = djContactFormSubmissionRequest.getOrganizationId();
+        this.hashKey = djContactFormSubmissionRequest.getHashKey();
         this.createdDate = ZonedDateTime.now();
         this.lastUpdatedDate = ZonedDateTime.now();
         this.version = 0;
