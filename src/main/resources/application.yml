@@ -1,3 +1,6 @@
+recaptcha:
+  projectId: cedar-meadow-meats-website
+  secretKey: ${RECAPTCHA_SECRET}
 spring:
   application:
     name: order-service

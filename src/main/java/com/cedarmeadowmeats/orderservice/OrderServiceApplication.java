@@ -4,6 +4,8 @@ import com.cedarmeadowmeats.orderservice.controller.OrderController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,9 +19,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.lang.invoke.MethodHandles;
+
 @SpringBootApplication
 @Import({ OrderController.class })
 public class OrderServiceApplication {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Value("${cors}")
     private String cors;
@@ -46,11 +52,15 @@ public class OrderServiceApplication {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
+        LOGGER.info("Enable cors for domains {}", cors);
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 if (StringUtils.hasLength(cors)) {
-                    registry.addMapping("/**").allowedOrigins(cors).allowedMethods("OPTIONS", "POST", "GET");
+                    registry.addMapping("/**")
+                            .allowedOrigins(cors)
+                            .allowedMethods("OPTIONS", "POST", "GET")
+                            .allowedHeaders("*");
                 }
             }
         };
