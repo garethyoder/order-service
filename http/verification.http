@@ -1,0 +1,14 @@
+### Recaptcha Submission
+POST {{base-url}}/verification/verify
+Content-Type: application/json
+
+{
+  "token": "HFYXlycgBTcAQQcG5HT1NWThopNRZxTTwfMH5xIw4qPRoZBz0uYmUiBxJzRCNSJ38PFDxDBQoBSExAeGwdY1cjCVhnYEtCPTpTSAFleTtZORwFb0QlV3UoT152PVtcTR0BYWdjXGZ-cEd0IydjQ3JwQk5CcnQwEG9JVTMQEVNkO1JQd2JARRZbVFJ3IgFxKz9rI3tzIl16O2UdBVomPkdJU0hwch8NXR8JBmZvBQoBBQp3ODoKE3hzV3JnYE4DPiQWCwkyW3sdJB0bKxsHQ28qQgw3UFZGTFQWFVMxGXp8XXElMgJLFFpmDFlqajVyXXUXVE96GQVdAXNXT1wCSF1eGUpCX1c5QmBmcCsVegpTSGAGETk5dRND",
+  "remoteIp": "64.67.240.249"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}

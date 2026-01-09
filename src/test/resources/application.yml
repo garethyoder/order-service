@@ -1,4 +1,7 @@
 cors: http://localhost
+recaptcha:
+  projectId: cedar-meadow-meats-website
+  secretKey: test-secret
 dynamodb:
   tableName: OrderTable
 

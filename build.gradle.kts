@@ -42,6 +42,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-devtools")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1")
+    implementation("com.google.cloud:google-cloud-recaptchaenterprise:3.78.0")
     implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:${property("awsServerlessJavaContainerSpringboot")}")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

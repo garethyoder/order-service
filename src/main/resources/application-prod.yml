@@ -1,4 +1,4 @@
-cors: https://www.cedarmeadowmeats.com, https://s3.us-east-1.amazonaws.com/
+cors: https://www.cedarmeadowmeats.com, https://gyoderaudioexpressions.com, https://s3.us-east-1.amazonaws.com/
 dynamodb.tableName: OrderTable-prod
 management:
   endpoints:
@@ -6,5 +6,5 @@ management:
       exposure:
         include: health
       cors:
-        allowed-origins: https://www.cedarmeadowmeats.com, https://s3.us-east-1.amazonaws.com/
+        allowed-origins: https://www.cedarmeadowmeats.com, https://gyoderaudioexpressions.com, https://s3.us-east-1.amazonaws.com
 
