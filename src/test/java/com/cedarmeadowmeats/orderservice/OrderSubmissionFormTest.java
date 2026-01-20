@@ -53,6 +53,7 @@ public class OrderSubmissionFormTest {
         Assertions.assertNotNull(result.getFirst().getCreatedDate());
         Assertions.assertNotNull(result.getFirst().getLastUpdatedDate());
         Assertions.assertNotNull(result.getFirst().getVersion());
+        Assertions.assertFalse(result.getFirst().getSpam());
 
     }
 
@@ -76,6 +77,30 @@ public class OrderSubmissionFormTest {
         Assertions.assertNotNull(result.getFirst().getCreatedDate());
         Assertions.assertNotNull(result.getFirst().getLastUpdatedDate());
         Assertions.assertNotNull(result.getFirst().getVersion());
+        Assertions.assertFalse(result.getFirst().getSpam());
+    }
+
+    @Test
+    public void submitOrderSpam() throws Exception {
+        OrderFormSubmissionRequest orderFormSubmissionRequest = new OrderFormSubmissionRequest("hdiutknglfdgdlhigt", "spam@test.com", "123-456-7890", "dkghkdfhbkdfhkgh", FormEnum.ORDER_FORM, OrganizationIdEnum.CEDAR_MEADOW_MEATS, OrderFormSelectionEnum.HALF_STEER, "Jane Doe", "d99a9aae1fefa1d4fabf3d406f843a7c");
+
+        this.mockMvc.perform(post("/order-form/submit").accept(MediaType.valueOf("application/json")).contentType(MediaType.APPLICATION_JSON).content(MAPPER.writeValueAsString(orderFormSubmissionRequest))).andExpect(status().isOk());
+
+        // verify the data is created in the DB
+        List<Submission> result = orderRepository.getSubmissionByEmail("spam@test.com");
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals(orderFormSubmissionRequest.getName(), result.getFirst().getName());
+        Assertions.assertEquals(orderFormSubmissionRequest.getEmail(), result.getFirst().getEmail());
+        Assertions.assertEquals(orderFormSubmissionRequest.getPhone(), result.getFirst().getPhone());
+        Assertions.assertEquals(orderFormSubmissionRequest.getForm(), result.getFirst().getForm());
+        Assertions.assertEquals(orderFormSubmissionRequest.getReferral(), result.getFirst().getReferral());
+        Assertions.assertEquals(orderFormSubmissionRequest.getOrganizationId(), result.getFirst().getOrganizationId());
+        Assertions.assertEquals(orderFormSubmissionRequest.getOrderFormSelectionEnum(), result.getFirst().getOrderFormSelectionEnum());
+        Assertions.assertNotNull(result.getFirst().getCreatedDate());
+        Assertions.assertNotNull(result.getFirst().getLastUpdatedDate());
+        Assertions.assertNotNull(result.getFirst().getVersion());
+        Assertions.assertTrue(result.getFirst().getSpam());
     }
 
 }
