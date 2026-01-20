@@ -99,5 +99,8 @@ public class OrderRepository {
             .addAttribute(Integer.class, a -> a.name("version")
                     .getter(Submission::getVersion)
                     .setter(Submission::setVersion))
+            .addAttribute(Boolean.class, a -> a.name("isSpam")
+                    .getter(Submission::getSpam)
+                    .setter(Submission::setSpam))
             .build();
 }

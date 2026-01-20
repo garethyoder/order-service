@@ -8,7 +8,6 @@ public class Submission {
     private String email;
     private String phone;
     private String comments;
-
     private String referral;
     private String eventDate;
     private String venue;
@@ -19,6 +18,7 @@ public class Submission {
     private ZonedDateTime lastUpdatedDate;
     private Integer version;
     private String hashKey;
+    private Boolean isSpam;
 
     public Submission(final SubmissionRequest submissionRequest) {
         this.name = submissionRequest.getName();
@@ -178,5 +178,13 @@ public class Submission {
 
     public void setHashKey(String hashKey) {
         this.hashKey = hashKey;
+    }
+
+    public Boolean getSpam() {
+        return isSpam;
+    }
+
+    public void setSpam(Boolean spam) {
+        isSpam = spam;
     }
 }

@@ -29,6 +29,7 @@ public class OrderService {
     public void saveSubmission(final Submission submission) throws NoSuchAlgorithmException {
 
         if (isHashValidated(submission)) {
+            submission.setSpam(SpamDetectorService.isSpam(submission));
             orderRepository.saveSubmission(submission);
         } else {
             try {
