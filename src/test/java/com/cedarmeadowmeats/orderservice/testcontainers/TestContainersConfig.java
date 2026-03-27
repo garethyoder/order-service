@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
-import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
@@ -19,10 +18,6 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import java.lang.invoke.MethodHandles;
 
 @TestConfiguration
-@TestPropertySource(properties = {
-        "amazon.aws.access-key=1",
-        "amazon.aws.secret-key=2"
-})
 public class TestContainersConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -33,7 +28,8 @@ public class TestContainersConfig {
     @Value("${dynamodb.tableName}")
     private String tableName;
 
-    @Bean
+    @Bean(destroyMethod = "stop")
+    @SuppressWarnings("resource")
     public GenericContainer<?> flociContainer() {
         GenericContainer<?> floci = new GenericContainer<>(FLOCI_IMAGE_NAME)
                 .withExposedPorts(AWS_EDGE_PORT)
