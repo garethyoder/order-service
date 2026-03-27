@@ -2,6 +2,40 @@
 
 Be sure docker is running before executing the following commands.
 
+## Local DynamoDB (floci)
+
+This project now uses floci for local DynamoDB emulation (no LocalStack dependency).
+
+Start local services:
+```bash
+docker compose up -d
+```
+
+Stop local services:
+```bash
+docker compose down
+```
+
+Run the full test suite:
+```bash
+./gradlew clean test
+```
+
+Run the full test suite (Windows PowerShell):
+```powershell
+.\gradlew.bat clean test
+```
+
+Run a focused form test suite:
+```bash
+./gradlew test --tests "com.cedarmeadowmeats.orderservice.OrderSubmissionFormTest"
+```
+
+Run a focused form test suite (Windows PowerShell):
+```powershell
+.\gradlew.bat test --tests "com.cedarmeadowmeats.orderservice.OrderSubmissionFormTest"
+```
+
 To create a bootable jar to be deployed to Lambda run:
 `./gradlew awsJar`
 
@@ -11,7 +45,7 @@ To deploy via SAM
 To build run
 `./gradlew build`
 
-To build run
+To build with SAM run
 `sam build`
 
 To deploy SAM for test:

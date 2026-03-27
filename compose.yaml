@@ -1,20 +1,24 @@
 version: '3.9'
 
 services:
-   localstack:
-      container_name: localstack
-      image: localstack/localstack:latest
+   floci:
+      container_name: floci
+      image: hectorvent/floci:latest
       environment:
          - DEBUG=1
-         - USE_SSL=0
-         - AWS_CBOR_DISABLE=1
-         - DOCKER_HOST=unix:///var/run/docker.sock
-         - HOSTNAME=localstack
-         - SERVICES=dynamodb,ses
          - AWS_DEFAULT_REGION=us-east-1
       ports:
          - '4566:4566'
+
+   floci-init:
+      image: amazon/aws-cli:2
+      depends_on:
+         - floci
+      environment:
+         - AWS_ACCESS_KEY_ID=1
+         - AWS_SECRET_ACCESS_KEY=2
+         - AWS_DEFAULT_REGION=us-east-1
+         - AWS_ENDPOINT_URL=http://floci:4566
       volumes:
-         - ./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh  # ready hook
-#         - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-         - "/var/run/docker.sock:/var/run/docker.sock"
+         - ./init-aws.sh:/init/init-aws.sh:ro
+      command: sh -c "until aws dynamodb list-tables --endpoint-url=$AWS_ENDPOINT_URL --region $AWS_DEFAULT_REGION > /dev/null 2>&1; do sleep 1; done; sh /init/init-aws.sh"
