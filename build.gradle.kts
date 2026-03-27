@@ -29,7 +29,6 @@ repositories {
 
 extra["awssdk"] = "2.31.27"
 extra["awsServerlessJavaContainerSpringboot"] = "2.1.4"
-extra["localstack"] = "1.21.2"
 
 dependencies {
     implementation(platform("software.amazon.awssdk:bom:${property("awssdk")}"))
@@ -47,7 +46,6 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("org.testcontainers:localstack:${property("localstack")}")
     testImplementation("org.testcontainers:junit-jupiter")
     rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:latest.release"))
     rewrite("org.openrewrite.recipe:rewrite-migrate-java")

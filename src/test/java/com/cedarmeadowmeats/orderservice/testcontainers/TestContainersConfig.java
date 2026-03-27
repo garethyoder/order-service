@@ -10,38 +10,40 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 import org.springframework.test.context.TestPropertySource;
-import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.lang.invoke.MethodHandles;
 
-import static org.testcontainers.containers.localstack.LocalStackContainer.Service.DYNAMODB;
-
 @TestConfiguration
 @TestPropertySource(properties = {
-        "amazon.aws.accesskey=1",
-        "amazon.aws.secretkey=2"
+        "amazon.aws.access-key=1",
+        "amazon.aws.secret-key=2"
 })
 public class TestContainersConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private static final DockerImageName LOCALSTACK_IMAGE_NAME = DockerImageName.parse("localstack/localstack:3.0.2");
+    private static final DockerImageName FLOCI_IMAGE_NAME = DockerImageName.parse("hectorvent/floci:latest");
+    private static final int AWS_EDGE_PORT = 4566;
 
     @Value("${dynamodb.tableName}")
     private String tableName;
 
     @Bean
-    public LocalStackContainer localStackContainer() {
-        LocalStackContainer lc = new LocalStackContainer(LOCALSTACK_IMAGE_NAME)
-                .withServices(DYNAMODB)
-                .withNetworkAliases("localstack")
+    public GenericContainer<?> flociContainer() {
+        GenericContainer<?> floci = new GenericContainer<>(FLOCI_IMAGE_NAME)
+                .withExposedPorts(AWS_EDGE_PORT)
+                .withEnv("AWS_DEFAULT_REGION", "us-east-1")
+                .waitingFor(Wait.forListeningPort())
                 .withReuse(true);
-        lc.start();
-        System.setProperty("amazon.dynamodb.endpoint", lc.getEndpointOverride(DYNAMODB).toString());
-        return lc;
+        floci.start();
+        String endpoint = String.format("http://%s:%d", floci.getHost(), floci.getMappedPort(AWS_EDGE_PORT));
+        System.setProperty("amazon.dynamodb.endpoint", endpoint);
+        return floci;
     }
 
     @EventListener
