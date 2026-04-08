@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
    floci:
       container_name: floci
@@ -11,14 +9,15 @@ services:
          - '4566:4566'
 
    floci-init:
-      image: amazon/aws-cli:2
+      image: public.ecr.aws/aws-cli/aws-cli:2.17.60
+      entrypoint: ""
       depends_on:
          - floci
       environment:
-         - AWS_ACCESS_KEY_ID=1
-         - AWS_SECRET_ACCESS_KEY=2
-         - AWS_DEFAULT_REGION=us-east-1
-         - AWS_ENDPOINT_URL=http://floci:4566
+         AWS_ACCESS_KEY_ID: 1
+         AWS_SECRET_ACCESS_KEY: 2
+         AWS_DEFAULT_REGION: us-east-1
+         AWS_ENDPOINT_URL: http://floci:4566
       volumes:
-         - ./init-aws.sh:/init/init-aws.sh:ro
-      command: sh -c "until aws dynamodb list-tables --endpoint-url=$AWS_ENDPOINT_URL --region $AWS_DEFAULT_REGION > /dev/null 2>&1; do sleep 1; done; sh /init/init-aws.sh"
+         - ./script/floci/dynamodb/init-dynamodb.sh:/init/init-dynamodb.sh:ro
+      command: sh -c "until aws dynamodb list-tables --endpoint-url=$$AWS_ENDPOINT_URL --region $$AWS_DEFAULT_REGION > /dev/null 2>&1; do sleep 1; done; sh /init/init-dynamodb.sh"

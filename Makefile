@@ -1,5 +1,5 @@
 build-OrderServiceTestFunctionUberJar:
-	@ ./gradlew buildAws
+	@ ./gradlew build
 	@ mkdir -p $(ARTIFACTS_DIR)/lib
 	@ cp  ./build/libs/order-service*.jar $(ARTIFACTS_DIR)/lib/
 #	@ cp  ./build/libs/HelloWorld*.jar $(ARTIFACTS_DIR)/lib/

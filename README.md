@@ -36,8 +36,8 @@ Run a focused form test suite (Windows PowerShell):
 .\gradlew.bat test --tests "com.cedarmeadowmeats.orderservice.OrderSubmissionFormTest"
 ```
 
-To create a bootable jar to be deployed to Lambda run:
-`./gradlew awsJar`
+To build the Lambda deployment artifact zip run:
+`./gradlew packageJar`
 
 To deploy via SAM
 `sam deploy --stack-name order-service-test --capabilities CAPABILITY_IAM --resolve-s3`

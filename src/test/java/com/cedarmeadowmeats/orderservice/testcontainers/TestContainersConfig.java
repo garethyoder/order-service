@@ -14,6 +14,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
 
 import java.lang.invoke.MethodHandles;
 
@@ -21,7 +22,6 @@ import java.lang.invoke.MethodHandles;
 public class TestContainersConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
     private static final DockerImageName FLOCI_IMAGE_NAME = DockerImageName.parse("hectorvent/floci:latest");
     private static final int AWS_EDGE_PORT = 4566;
 
@@ -37,6 +37,7 @@ public class TestContainersConfig {
                 .waitingFor(Wait.forListeningPort())
                 .withReuse(true);
         floci.start();
+
         String endpoint = String.format("http://%s:%d", floci.getHost(), floci.getMappedPort(AWS_EDGE_PORT));
         System.setProperty("amazon.dynamodb.endpoint", endpoint);
         return floci;
@@ -47,8 +48,13 @@ public class TestContainersConfig {
         ApplicationContext applicationContext = applicationReadyEvent.getApplicationContext();
         DynamoDbClient client = applicationContext.getBean("dynamoDbClient", DynamoDbClient.class);
         DynamoDbEnhancedClient enhancedClient = DynamoDbEnhancedClient.builder().dynamoDbClient(client).build();
-        LOGGER.info("Creating table");
-        enhancedClient.table(tableName, OrderRepository.SUBMISSION_STATIC_TABLE_SCHEMA).createTable();
+
+        try {
+            LOGGER.info("Creating table {}", tableName);
+            enhancedClient.table(tableName, OrderRepository.SUBMISSION_STATIC_TABLE_SCHEMA).createTable();
+        } catch (ResourceInUseException ignored) {
+            LOGGER.info("Table {} already exists", tableName);
+        }
     }
 
 }
