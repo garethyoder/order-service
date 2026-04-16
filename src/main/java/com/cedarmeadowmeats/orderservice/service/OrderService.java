@@ -2,13 +2,13 @@ package com.cedarmeadowmeats.orderservice.service;
 
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import com.cedarmeadowmeats.orderservice.repository.OrderRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
 import jakarta.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.lang.invoke.MethodHandles;
 import java.security.MessageDigest;
@@ -34,7 +34,7 @@ public class OrderService {
         } else {
             try {
                 LOGGER.warn("Failed Hash Validation {}", objectMapper.writeValueAsString(submission));
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 throw new RuntimeException(e);
             }
         }
