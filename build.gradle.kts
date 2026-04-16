@@ -1,18 +1,11 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.5.8"
+    id("org.springframework.boot") version "4.0.5"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.openrewrite.rewrite") version("latest.release")
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.7"
-
-rewrite {
-    activeRecipe("org.openrewrite.java.spring.boot4.UpgradeSpringBoot_4_0")
-    activeRecipe("org.openrewrite.java.migrate.UpgradeToJava25")
-    setExportDatatables(true)
-}
+version = "0.0.8"
 
 java {
     toolchain {
@@ -23,12 +16,11 @@ java {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven("https://repo.spring.io/milestone")
-    maven("https://repo.spring.io/snapshot")
 }
 
-extra["awssdk"] = "2.31.27"
-extra["awsServerlessJavaContainerSpringboot"] = "2.1.4"
+extra["awssdk"] = "2.42.30"
+extra["awsServerlessJavaContainerSpringboot"] = "3.0.1"
+extra["testcontainers"] = "1.21.4"
 
 dependencies {
     implementation(platform("software.amazon.awssdk:bom:${property("awssdk")}"))
@@ -37,19 +29,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-docker-compose")
     implementation("org.springframework.boot:spring-boot-devtools")
-    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1")
-    implementation("com.google.cloud:google-cloud-recaptchaenterprise:3.78.0")
-    implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot3:${property("awsServerlessJavaContainerSpringboot")}")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.5")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.21.2")
+    implementation("com.google.cloud:google-cloud-recaptchaenterprise:3.85.0")
+    implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot4:${property("awsServerlessJavaContainerSpringboot")}")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
-    testImplementation("org.testcontainers:junit-jupiter")
-    rewrite(platform("org.openrewrite.recipe:rewrite-recipe-bom:latest.release"))
-    rewrite("org.openrewrite.recipe:rewrite-migrate-java")
-    rewrite("org.openrewrite.recipe:rewrite-spring:6.19.0")
+    testImplementation("org.testcontainers:junit-jupiter:${property("testcontainers")}")
 }
 
 tasks.withType<Test> {
