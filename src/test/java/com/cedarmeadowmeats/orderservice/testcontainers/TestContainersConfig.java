@@ -1,17 +1,14 @@
 package com.cedarmeadowmeats.orderservice.testcontainers;
 
 import com.cedarmeadowmeats.orderservice.repository.OrderRepository;
+import io.floci.testcontainers.FlociContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.utility.DockerImageName;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.ResourceInUseException;
@@ -22,26 +19,17 @@ import java.lang.invoke.MethodHandles;
 public class TestContainersConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final DockerImageName FLOCI_IMAGE_NAME = DockerImageName.parse("hectorvent/floci:latest");
-    private static final int AWS_EDGE_PORT = 4566;
+
+    private static final FlociContainer FLOCI = new FlociContainer();
+
+    static {
+        FLOCI.start();
+        // Set endpoint before Spring creates the DynamoDbClient bean.
+        System.setProperty("amazon.dynamodb.endpoint", FLOCI.getEndpoint());
+    }
 
     @Value("${dynamodb.tableName}")
     private String tableName;
-
-    @Bean(destroyMethod = "stop")
-    @SuppressWarnings("resource")
-    public GenericContainer<?> flociContainer() {
-        GenericContainer<?> floci = new GenericContainer<>(FLOCI_IMAGE_NAME)
-                .withExposedPorts(AWS_EDGE_PORT)
-                .withEnv("AWS_DEFAULT_REGION", "us-east-1")
-                .waitingFor(Wait.forListeningPort())
-                .withReuse(true);
-        floci.start();
-
-        String endpoint = String.format("http://%s:%d", floci.getHost(), floci.getMappedPort(AWS_EDGE_PORT));
-        System.setProperty("amazon.dynamodb.endpoint", endpoint);
-        return floci;
-    }
 
     @EventListener
     public void onApplicationReady(ApplicationReadyEvent applicationReadyEvent) {

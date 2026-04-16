@@ -2,14 +2,14 @@ package com.cedarmeadowmeats.orderservice.service;
 
 import com.cedarmeadowmeats.orderservice.model.Submission;
 import com.cedarmeadowmeats.orderservice.repository.OrderRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -40,7 +40,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void testSaveSubmissionFailed() throws NoSuchAlgorithmException, JsonProcessingException {
+    void testSaveSubmissionFailed() throws NoSuchAlgorithmException, JacksonException {
 
         when(objectMapper.writeValueAsString(any())).thenReturn("Mapper String Here");
 
