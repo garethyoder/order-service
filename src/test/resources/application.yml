@@ -4,4 +4,9 @@ recaptcha:
   secretKey: test-secret
 dynamodb:
   tableName: OrderTable
+amazon:
+  aws:
+    access-key: 1
+    secret-key: 2
+  dynamodb.endpoint: http://localhost:4566/
 
