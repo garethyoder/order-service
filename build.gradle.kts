@@ -1,11 +1,12 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.5"
+    id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.graalvm.buildtools.native") version "0.11.0"
 }
 
 group = "com.cedarmeadowmeats"
-version = "0.0.8"
+version = "0.0.9"
 
 java {
     toolchain {
@@ -18,7 +19,7 @@ repositories {
     mavenCentral()
 }
 
-extra["awssdk"] = "2.42.30"
+extra["awssdk"] = "2.29.11"
 extra["awsServerlessJavaContainerSpringboot"] = "3.0.1"
 extra["testcontainers"] = "1.21.4"
 
