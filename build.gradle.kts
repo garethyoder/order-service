@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "4.0.5"
+    id("org.springframework.boot") version "4.2.0"
     id("io.spring.dependency-management") version "1.1.7"
 }
 
@@ -18,8 +18,8 @@ repositories {
     mavenCentral()
 }
 
-extra["awssdk"] = "2.42.30"
-extra["awsServerlessJavaContainerSpringboot"] = "3.0.1"
+extra["awssdk"] = "2.59.8"
+extra["awsServerlessJavaContainerSpringboot"] = "3.0.5"
 extra["testcontainers"] = "1.21.4"
 
 dependencies {
@@ -31,10 +31,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-devtools")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.5")
-    implementation("com.google.cloud:google-cloud-recaptchaenterprise:3.85.0")
+    implementation("com.google.cloud:google-cloud-recaptchaenterprise:3.100.0")
     implementation("com.amazonaws.serverless:aws-serverless-java-container-springboot4:${property("awsServerlessJavaContainerSpringboot")}")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
-    testImplementation("io.floci:testcontainers-floci:2.0.0")
+    testImplementation("io.floci:testcontainers-floci:2.17.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter:${property("testcontainers")}")

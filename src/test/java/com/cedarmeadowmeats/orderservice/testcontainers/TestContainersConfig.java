@@ -26,6 +26,8 @@ public class TestContainersConfig {
         FLOCI.start();
         // Set endpoint before Spring creates the DynamoDbClient bean.
         System.setProperty("amazon.dynamodb.endpoint", FLOCI.getEndpoint());
+        System.setProperty("amazon.aws.access-key", "test");
+        System.setProperty("amazon.aws.secret-key", "test");
     }
 
     @Value("${dynamodb.tableName}")
